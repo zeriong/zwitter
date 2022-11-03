@@ -5,19 +5,17 @@ import {
 import {Auth} from "../routes/Auth";
 import {Home} from "../routes/Home";
 
-export const AppRouter = ()=> {
-    const [isLoggedIn, setIsloggedIn] = useState(true);
+export const AppRouter = ( {isLoggedIn} )=> {
     return (
         <Router>
             <Routes>
-                {isLoggedIn ?
+                {isLoggedIn ? (
                     <>
                         <Route path="/" element={<Home/>}/>
                     </>
-                    : (
-                        <Route path="/" element={<Auth/>}/>
-                    )
-                }
+                ): (
+                    <Route path="/" element={<Auth/>}/>
+                )}
             </Routes>
         </Router>
     );
