@@ -1,12 +1,28 @@
-import React, { useState } from "react";
-import { dbService,dbAddDoc,dbCollection } from "Fbase";
+import React, {useEffect, useState} from "react";
+import { dbService } from "Fbase";
+import { addDoc, collection, getDocs } from "firebase/firestore";
 
 export const Home = ()=> {
     const [zweet, setZweet] = useState("");
+    const [zweets, setZweets] = useState([]);
+    const getZweets = async () => {
+        const dbZweets = await getDocs(collection(dbService,"zweets"));
+        dbZweets.forEach((document) => {
+            const zweetObject = {
+                ...document.data(),
+                id: document.id,
+            }
+            setZweets((prev)=>[zweetObject, ...prev])
+        });
+        console.log(dbZweets);
+    }
+    useEffect(()=>{
+        getZweets();
+    },[]);
     const onSubmit = async (event)=> {
         event.preventDefault();
         try{
-            const docRef = await dbAddDoc(dbCollection(dbService, "zweets"),{
+            const docRef = await addDoc(collection(dbService, "zweets"),{
                 zweet,
                 createAt: Date.now(),
             });
@@ -19,6 +35,7 @@ export const Home = ()=> {
     const onChange = ({ target: {value} })=> {
         setZweet(value);
     }
+    console.log(zweets);
         return (
             <div>
                 <form onSubmit={onSubmit}>
@@ -31,6 +48,13 @@ export const Home = ()=> {
                     />
                     <input type="submit" value="zweet"/>
                 </form>
+                <div>
+                    {zweets.map(zweet => (
+                        <div key={zweet.id}>
+                            <h4>{zweet.zweet}</h4>
+                        </div>
+                    ))}
+                </div>
             </div>
         );
 };
