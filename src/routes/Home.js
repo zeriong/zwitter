@@ -1,30 +1,31 @@
 import React, {useEffect, useState} from "react";
 import { dbService } from "Fbase";
-import { addDoc, collection, getDocs } from "firebase/firestore";
+import { addDoc, collection, onSnapshot, query, orderBy } from "firebase/firestore";
 
-export const Home = ()=> {
+export const Home = ({ userObj })=> {
     const [zweet, setZweet] = useState("");
     const [zweets, setZweets] = useState([]);
-    const getZweets = async () => {
-        const dbZweets = await getDocs(collection(dbService,"zweets"));
-        dbZweets.forEach((document) => {
-            const zweetObject = {
-                ...document.data(),
-                id: document.id,
-            }
-            setZweets((prev)=>[zweetObject, ...prev])
-        });
-        console.log(dbZweets);
-    }
     useEffect(()=>{
-        getZweets();
+        const q = query(
+            collection(dbService, "zweets"),
+            orderBy("createdAt","desc")
+            //백엔드에서도 문서 추가할때 필드 "createdAt"가 없다면 업데이트가 안된다. 고로 백엔드에서 보내는 기능을 쓰고 싶다면 orderBy를 삭제하거나 다른걸 찾아보자.
+        );
+        onSnapshot(q, (snapshot)=>{
+            const zweetArr = snapshot.docs.map((doc)=>({
+                id: doc.id,
+            ...doc.data(),
+            }));
+            setZweets(zweetArr);
+        });
     },[]);
     const onSubmit = async (event)=> {
         event.preventDefault();
         try{
             const docRef = await addDoc(collection(dbService, "zweets"),{
-                zweet,
-                createAt: Date.now(),
+                text: zweet,
+                createdAt: Date.now(),
+                creatorId: userObj.uid,
             });
             console.log("Document written with ID: ",docRef);
         } catch (error) {
@@ -51,7 +52,7 @@ export const Home = ()=> {
                 <div>
                     {zweets.map(zweet => (
                         <div key={zweet.id}>
-                            <h4>{zweet.zweet}</h4>
+                            <h4>{zweet.text}</h4>
                         </div>
                     ))}
                 </div>
