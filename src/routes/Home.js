@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from "react";
 import { dbService } from "Fbase";
 import { addDoc, collection, onSnapshot, query, orderBy } from "firebase/firestore";
+import {Zweet} from "components/Zweet";
 
 export const Home = ({ userObj })=> {
     const [zweet, setZweet] = useState("");
@@ -51,9 +52,7 @@ export const Home = ({ userObj })=> {
                 </form>
                 <div>
                     {zweets.map(zweet => (
-                        <div key={zweet.id}>
-                            <h4>{zweet.text}</h4>
-                        </div>
+                        <Zweet key={zweet.id} zweetObj={zweet} isOwner={zweet.creatorId === userObj.uid }/>
                     ))}
                 </div>
             </div>
