@@ -14,7 +14,7 @@ export const AppRouter = ( {isLoggedIn, userObj} )=> {
                 {isLoggedIn ? (
                     <>
                         <Route path="/" element={<Home userObj={userObj}/>}/>
-                        <Route path="/Profile" element={<Profile/>}/>
+                        <Route path="/Profile" element={<Profile userObj={userObj}/>}/>
                     </>
                 ): (
                     <>
