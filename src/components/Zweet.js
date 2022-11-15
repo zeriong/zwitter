@@ -1,6 +1,7 @@
-import React, {useState} from "react";
-import {dbService} from "../Fbase";
-import {deleteDoc, doc, updateDoc } from "firebase/firestore";
+import React, { useState } from "react";
+import { dbService, storageService } from "Fbase";
+import { deleteDoc, doc, updateDoc } from "firebase/firestore";
+import { deleteObject, ref } from "@firebase/storage";
 
 
 export const Zweet = ({ zweetObj, isOwner })=> {
@@ -11,6 +12,7 @@ export const Zweet = ({ zweetObj, isOwner })=> {
         const ok = window.confirm("Are you sure you want to delete this zweet?");
         if(ok){
             await deleteDoc(zweetTextRef);
+            await deleteObject(ref(storageService, zweetObj.attachmentUrl));
         }
     };
     const toggleEditing = () => setEditing((prev)=> !prev);
@@ -45,6 +47,7 @@ export const Zweet = ({ zweetObj, isOwner })=> {
                     <>
                         <div>
                             <h4>{zweetObj.text}</h4>
+                            {zweetObj.attachmentUrl && <img alt="uploadImage" src={zweetObj.attachmentUrl} width="50px" height="50px"/>}
                             {isOwner && (
                                 <>
                                     <button onClick={onDeleteClick}>Delete Zweet</button>
