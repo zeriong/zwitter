@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import {authService, dbService} from "Fbase";
 import { useNavigate } from "react-router-dom";
-import {collection, getDocs, query, where} from "@firebase/firestore";
+import {collection, getDocs, query, where, orderBy} from "@firebase/firestore";
 
 export const Profile = ({userObj})=> {
     const navigate = useNavigate();
@@ -15,6 +15,7 @@ export const Profile = ({userObj})=> {
             const q = query(
                 collection(dbService,"zweets"),
                 where("creatorId", "==", userObj.uid),
+                orderBy("createdAt", "desc")
             );
             const querySnapshot = await getDocs(q);
             querySnapshot.forEach((doc)=>{
