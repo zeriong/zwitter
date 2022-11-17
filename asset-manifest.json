@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/zwitter/static/css/main.9bf60c74.css",
+    "main.js": "/zwitter/static/js/main.1b649681.js",
+    "index.html": "/zwitter/index.html",
+    "main.9bf60c74.css.map": "/zwitter/static/css/main.9bf60c74.css.map",
+    "main.1b649681.js.map": "/zwitter/static/js/main.1b649681.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.9bf60c74.css",
+    "static/js/main.1b649681.js"
+  ]
+}
