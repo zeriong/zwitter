@@ -8,7 +8,7 @@ import {Navigation} from "components/Navigation";
 
 export const AppRouter = ( {refreshUser, isLoggedIn, userObj} )=> {
     return (
-        <Router>
+        <Router basename={process.env.PUBLIC_URL}>
             {isLoggedIn && <Navigation userObj={userObj}/>}
             <Routes>
                 {isLoggedIn ? (
