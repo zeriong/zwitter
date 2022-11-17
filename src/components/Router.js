@@ -22,8 +22,8 @@ export const AppRouter = ( {refreshUser, isLoggedIn, userObj} )=> {
                             justifyContent: "center",
                         }}
                     >
-                        <Route path={`${process.env.PUBLIC_URL}/`} element={<Home userObj={userObj}/>}/>
-                        <Route path={`${process.env.PUBLIC_URL}/profile`}
+                        <Route path="/" element={<Home userObj={userObj}/>}/>
+                        <Route path="/Profile"
                                element={ <Profile userObj={userObj}
                                 refreshUser={refreshUser} /> }
                         />
