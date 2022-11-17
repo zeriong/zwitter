@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/zwitter/static/css/main.9bf60c74.css",
-    "main.js": "/zwitter/static/js/main.efe3102f.js",
+    "main.js": "/zwitter/static/js/main.aaa121e2.js",
     "index.html": "/zwitter/index.html",
     "main.9bf60c74.css.map": "/zwitter/static/css/main.9bf60c74.css.map",
-    "main.efe3102f.js.map": "/zwitter/static/js/main.efe3102f.js.map"
+    "main.aaa121e2.js.map": "/zwitter/static/js/main.aaa121e2.js.map"
   },
   "entrypoints": [
     "static/css/main.9bf60c74.css",
-    "static/js/main.efe3102f.js"
+    "static/js/main.aaa121e2.js"
   ]
 }
