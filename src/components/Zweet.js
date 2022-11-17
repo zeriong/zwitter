@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import { dbService, storageService } from "Fbase";
 import { deleteDoc, doc, updateDoc } from "firebase/firestore";
-import { deleteObject, ref } from "@firebase/storage";
+import { deleteObject, ref } from "firebase/storage";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrash, faPencilAlt } from "@fortawesome/free-solid-svg-icons";
 
 
 export const Zweet = ({ zweetObj, isOwner })=> {
@@ -25,34 +27,43 @@ export const Zweet = ({ zweetObj, isOwner })=> {
         setEditing(false);
     };
     return (
-        <div>
+        <div className="nweet">
             {
                 editing ? (
                     <>
-                        <form onSubmit={onSubmit}>
+                        <form onSubmit={onSubmit} className="container nweetEdit">
                             <input type="text"
                                    placeholder="Edit your zweet"
                                    value={newZweet}
                                    required
+                                   autoFocus
                                    onChange={onChange}
+                                   className="formInput"
                             />
                             <input
                                 type="submit"
                                 value="Update Zweet"
+                                className="formBtn"
                             />
                         </form>
-                        <button onClick={toggleEditing}>Cancel</button>
+                        <span onClick={toggleEditing} className="formBtn cancelBtn">
+                            Cancel
+                        </span>
                     </>
                 ) : (
                     <>
                         <div>
                             <h4>{zweetObj.text}</h4>
-                            {zweetObj.attachmentUrl && <img alt="uploadImage" src={zweetObj.attachmentUrl} width="50px" height="50px"/>}
+                            {zweetObj.attachmentUrl && <img alt="up-img" src={zweetObj.attachmentUrl} />}
                             {isOwner && (
-                                <>
-                                    <button onClick={onDeleteClick}>Delete Zweet</button>
-                                    <button onClick={toggleEditing}>Edit Zweet</button>
-                                </>
+                                <div className="nweet__actions">
+                                    <span onClick={onDeleteClick}>
+                                        <FontAwesomeIcon icon={faTrash} />
+                                    </span>
+                                    <span onClick={toggleEditing}>
+                                        <FontAwesomeIcon icon={faPencilAlt} />
+                                    </span>
+                                </div>
                             )}
                         </div>
                     </>
